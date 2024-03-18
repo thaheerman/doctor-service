@@ -1,23 +1,20 @@
-# Use Node.js 16 slim as the base image
-FROM node:16
+# Use Node.js Alpine base image
+FROM node:alpine
 
-# Set the working directory
+# Create and set the working directory inside the container
 WORKDIR /app
 
 # Copy package.json and package-lock.json to the working directory
-COPY package*.json ./
+COPY package.json package-lock.json /app/
 
 # Install dependencies
 RUN npm install
 
-# Copy the rest of the application code
-COPY . .
+# Copy the entire codebase to the working directory
+COPY . /app/
 
-# Build the React app
-RUN npm run build
-
-# Expose port 3000 (or the port your app is configured to listen on)
+# Expose the port your app runs on (replace <PORT_NUMBER> with your app's actual port)
 EXPOSE 3000
 
-# Start your Node.js server (assuming it serves the React app)
-ENTRYPOINT ["npm", "start"]
+# Define the command to start your application (replace "start" with the actual command to start your app)
+CMD ["npm", "start"]
